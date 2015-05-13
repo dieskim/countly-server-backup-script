@@ -68,9 +68,9 @@ cp --parents $COUNTLYDIR/api/config.js .
 cp --parents $COUNTLYDIR/plugins/drill/config.js .
 
 ## COPY COUNTLY IMAGES AND CERTIFICATES
-cp -r $COUNTLYDIR/frontend/express/public/appimages .
-cp -r $COUNTLYDIR/frontend/express/public/userimages .
-cp -r $COUNTLYDIR/frontend/express/certificates .
+cp -r --parents $COUNTLYDIR/frontend/express/public/appimages .
+cp -r --parents $COUNTLYDIR/frontend/express/public/userimages .
+cp -r --parents $COUNTLYDIR/frontend/express/certificates .
 
 ## MOVE UP A DIR
 cd ..
