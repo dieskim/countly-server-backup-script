@@ -40,11 +40,12 @@ Countly Backup Guide;
 2. Create a folder where you would like to place the script and move into the folder
 
 ``mkdir countly-backup-script``
+
 ``cd countly-backup-script``
 
 3. wget the backup script
 
-``wget countly-backup.sh``
+``wget https://github.com/dieskim/countly-server-backup-script/blob/master/countly-backup.sh``
 
 4. Set the script to be executable
 
@@ -58,6 +59,12 @@ Countly Backup Guide;
 ``sh -x countly-backup.sh 2>&1 | tee debug.txt``
 
 7. Add Script to Crontab to run daily
+
+``crontab -e``
+
+- Choose your editor and add the below to the crontab to run script every night at midnight - save file
+	
+``00 00 * * * /path/to/countly-backup-script/countly-backup.sh``
 
 ## Author
 
