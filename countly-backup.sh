@@ -31,9 +31,6 @@ BACKUPROOT=~/countly-backup
 ## SET BACKUP DIR/TAR NAME
 BACKUPDIRVAR=hostname-countly-backup
 
-## SET COUNTLY LOCATION DIR
-COUNTLYDIR=/usr/local/countly
-
 ##############################################################################################################################
 ##                              DO NOT EDIT FROM HERE - EXCEPT IF YOU KNOW WHAT YOU ARE DOING                               ##
 
@@ -51,39 +48,19 @@ fi
 
 ## CREATE BACKUPDIR
 mkdir $BACKUPROOT
-cd $BACKUPROOT
-mkdir $BACKUPDIR
 
-## CD TO BACKUPDIR
-cd $BACKUPDIR
-
-## BACKUP COUNTLY DB
-mongodump --db countly
-mongodump --db countly_drill
-
-## COPY COUNTLY CONFIG FILES
-cp --parents $COUNTLYDIR/frontend/express/config.js .
-cp --parents $COUNTLYDIR/frontend/express/public/javascripts/countly/countly.config.js .
-cp --parents $COUNTLYDIR/api/config.js .
-cp --parents $COUNTLYDIR/plugins/drill/config.js .
-
-## COPY COUNTLY IMAGES AND CERTIFICATES
-cp -r --parents $COUNTLYDIR/frontend/express/public/appimages .
-cp -r --parents $COUNTLYDIR/frontend/express/public/userimages .
-cp -r --parents $COUNTLYDIR/frontend/express/certificates .
-
-## MOVE UP A DIR
-cd ..
+## RUN BACKUP
+countly backup $BACKUPROOT/$BACKUPDIR
 
 ## TAR THE WHOLE BACKUP DIR AND REMOVE DIR IF SUCCESSFUL
-tar -cf $BACKUPDIR.tar $BACKUPDIR && rm -R $BACKUPDIR
+tar -cf $BACKUPROOT/$BACKUPDIR.tar $BACKUPROOT/$BACKUPDIR && rm -R $BACKUPROOT/$BACKUPDIR
 
 ## START IF REMOTEBACKUP ELSE LOCALBACKUP
 if $REMOTEBACKUP;
 then
 ## SEND TAR TO REMOTE SERVER
 sftp $REMOTESERVER <<_EOF_
-    put $BACKUPDIR.tar $REMOTEDEST/$BACKUPDIR.tar
+    put $BACKUPROOT/$BACKUPDIR.tar $REMOTEDEST/$BACKUPDIR.tar
     bye
 _EOF_
 
@@ -98,10 +75,10 @@ _EOF_
     ## END IF ROTATEBACKUP REMOVE OLD
 
     ## REMOVE LOCAL TAR
-    rm -v $BACKUPDIR.tar | tee -a $BACKUPROOT/countly-backup.log
+    rm -v $BACKUPROOT/$BACKUPDIR.tar | tee -a $BACKUPROOT/countly-backup.log
 else
     ## MOVE TAR TO LOCALDEST
-    mv -v $BACKUPDIR.tar $LOCALDEST | tee -a $BACKUPROOT/countly-backup.log
+    mv -v $BACKUPROOT/$BACKUPDIR.tar $LOCALDEST | tee -a $BACKUPROOT/countly-backup.log
 
     ## START IF ROTATEBACKUP REMOVE OLD
     if $ROTATEBACKUP
