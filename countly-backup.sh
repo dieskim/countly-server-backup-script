@@ -17,7 +17,7 @@ REMOTESERVER=backup-server-nickname
 REMOTEDEST=/home/backup-user/countly-backup
 
 ## SET LOCAL DEST - SCRIPT DEFAULTS TO MOVING TAR TO LOCAL DESTINATION
-LOCALDEST=~/countly-backup
+LOCALDEST=~/countly-backup/
 
 ## ROTATE BACKUP TRUE OR FALSE
 ROTATEBACKUP=true
@@ -77,6 +77,10 @@ _EOF_
     ## REMOVE LOCAL TAR
     rm -v $BACKUPROOT/$BACKUPDIR.tar | tee -a $BACKUPROOT/countly-backup.log
 else
+
+    ## MAKE LOCALDEST
+    mkdir $LOCALDEST
+
     ## MOVE TAR TO LOCALDEST
     mv -v $BACKUPROOT/$BACKUPDIR.tar $LOCALDEST | tee -a $BACKUPROOT/countly-backup.log
 
