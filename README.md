@@ -10,10 +10,9 @@ Countly Server;
 
 - [Countly Server (countly-server)](https://github.com/Countly/countly-server)
 
-Titanium Countly Messaging Modules
+Appcelerator Titanium Hyperloop Countly Modules
 
-- [Countly Titanium Android Messaging Module](https://github.com/dieskim/Titanium-Count.ly-Android-Messaging)
-- [Countly Titanium iOS Messaging Module](https://github.com/dieskim/Titanium-Count.ly-Messaging)
+- https://github.com/dieskim/Appcelerator.Hyperloop.Countly
 
 Other Countly SDK repositories;
 
