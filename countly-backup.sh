@@ -31,6 +31,9 @@ BACKUPROOT=/var/countly-backup
 ## SET BACKUP DIR/TAR NAME
 BACKUPDIRVAR=hostname-countly-backup
 
+#BACKUPDIRUSER
+BACKUPDIRUSER=dropbox-user
+
 ##############################################################################################################################
 ##                              DO NOT EDIT FROM HERE - EXCEPT IF YOU KNOW WHAT YOU ARE DOING                               ##
 
@@ -82,10 +85,13 @@ _EOF_
 else
 
     ## MAKE LOCALDEST
-    mkdir $LOCALDEST
+    mkdir -p $LOCALDEST
 
     ## MOVE TAR TO LOCALDEST
     mv -v $BACKUPROOT/$BACKUPDIR.tar.gz $LOCALDEST | tee -a $BACKUPROOT/countly-backup.log
+
+    ## CHOWN DEST DIR
+    chown -fR $BACKUPDIRUSER:$BACKUPDIRUSER $LOCALDEST
 
     ## START IF ROTATEBACKUP REMOVE OLD
     if $ROTATEBACKUP
